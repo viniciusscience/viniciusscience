@@ -21,4 +21,3 @@ Olá, Eu sou o Vinicius👋
   
 </div>
 
- ![Snake animation](https://github.com/viniciusscience/viniciusscience/blob/output/github-contribution-grid-snake.svg)
