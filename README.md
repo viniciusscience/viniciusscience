@@ -1,5 +1,4 @@
 Olá, Eu sou o Vinicius👋
-// Todo dia aprendendo uma coisa nova!! //
 <div align="center">
   <a href="https://github.com/viniciusscience">
   <img height="180em" src="https://github-readme-stats.vercel.app/api?username=viniciusscience&show_icons=true&theme=shades-of-purple&include_all_commits=true&count_private=true"/>
