@@ -1,8 +1,7 @@
 <!-- Banner -->
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=180&section=header&text=Vinicius%20Science%20👨‍💻&fontSize=40&fontAlignY=35" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=180&section=header&text=Jose%20Vinicius%20👨‍💻&fontSize=40&fontAlignY=35" />
 </div>
-
 ## 👋 Olá! Eu sou o Vinicius
 
 Desenvolvedor apaixonado por tecnologia, com experiência sólida em backend e frontend, entregando soluções escaláveis e de alta qualidade.
