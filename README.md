@@ -126,8 +126,19 @@ Uma extensão guiada para ajudar desenvolvedores a criarem integrações MCP de 
 ## 📊 GitHub Stats
 
 <div align="center">
-  <img height="170" src="https://github-readme-stats.vercel.app/api?username=viniciusscience&show_icons=true&theme=github_dark&hide_border=true" />
-  <img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=viniciusscience&layout=compact&theme=github_dark&hide_border=true" />
+
+  <img
+    height="165"
+    src="https://github-readme-stats.vercel.app/api?username=viniciusscience&show_icons=true&theme=github_dark&hide_border=true&count_private=true"
+    alt="GitHub Stats"
+  />
+
+  <img
+    height="165"
+    src="https://github-readme-stats.vercel.app/api/top-langs/?username=viniciusscience&layout=compact&theme=github_dark&hide_border=true"
+    alt="Top Languages"
+  />
+
 </div>
 
 ---
