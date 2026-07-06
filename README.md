@@ -122,25 +122,6 @@ Uma extensão guiada para ajudar desenvolvedores a criarem integrações MCP de 
 - Boas práticas com Java, Spring Boot e Angular
 
 ---
-
-## 📊 GitHub Stats
-
-<div align="center">
-
-  <img
-    width="420"
-    src="https://github-readme-stats.vercel.app/api?username=viniciusscience&show_icons=true&theme=github_dark&hide_border=true&include_all_commits=true"
-    alt="GitHub Stats"
-  />
-
-  <img
-    width="320"
-    src="https://github-readme-stats.vercel.app/api/top-langs/?username=viniciusscience&layout=compact&theme=github_dark&hide_border=true"
-    alt="Top Languages"
-  />
-
-</div>
-
 ---
 
 <div align="center">
