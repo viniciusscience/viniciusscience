@@ -122,7 +122,6 @@ Uma extensão guiada para ajudar desenvolvedores a criarem integrações MCP de 
 - Boas práticas com Java, Spring Boot e Angular
 
 ---
----
 
 <div align="center">
   <strong>💻 Construindo soluções com código limpo, arquitetura e propósito.</strong>
