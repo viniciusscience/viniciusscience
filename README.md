@@ -128,13 +128,13 @@ Uma extensão guiada para ajudar desenvolvedores a criarem integrações MCP de 
 <div align="center">
 
   <img
-    height="165"
-    src="https://github-readme-stats.vercel.app/api?username=viniciusscience&show_icons=true&theme=github_dark&hide_border=true&count_private=true"
+    width="420"
+    src="https://github-readme-stats.vercel.app/api?username=viniciusscience&show_icons=true&theme=github_dark&hide_border=true&include_all_commits=true"
     alt="GitHub Stats"
   />
 
   <img
-    height="165"
+    width="320"
     src="https://github-readme-stats.vercel.app/api/top-langs/?username=viniciusscience&layout=compact&theme=github_dark&hide_border=true"
     alt="Top Languages"
   />
