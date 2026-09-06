@@ -74,6 +74,27 @@ flowchart LR
 
 ---
 
+## 🧠 Engineering Notes
+
+Uma coleção curta e visual dos assuntos que venho estudando e aplicando:
+
+| Tema | Nota |
+|---|---|
+| Backend | [Princípios de backend engineering](docs/backend-engineering.md) |
+| JVM | [Virtual threads](docs/virtual-threads.md) |
+| Concorrência | [Checklist de concorrência](docs/concurrency-checklist.md) |
+| Deadlocks | [Playbook de deadlock](docs/deadlock-playbook.md) |
+| PostgreSQL | [MVCC e locks](docs/mvcc-locking.md) |
+| PostgreSQL | [Notas de estudo](docs/postgresql-notes.md) |
+| Redis | [Sessão e estratégia de cache](docs/redis-strategy.md) |
+| Sistemas distribuídos | [Consistência e idempotência](docs/distributed-consistency.md) |
+| RabbitMQ | [Fluxo de mensageria](docs/rabbitmq-flow.md) |
+| Observabilidade | [Fluxo de diagnóstico](docs/observability-flow.md) |
+| Multi-tenancy | [Resolução por domínio e tenant_id](docs/multitenancy-flow.md) |
+| Traefik | [Fluxo de roteamento](docs/traefik-request-flow.md) |
+
+---
+
 ## 🔨 Projetos em destaque
 
 ### SaaS multi-tenant de e-commerce
