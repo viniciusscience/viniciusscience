@@ -1,1 +1,632 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JVM Concurrency Lab</title><style>body{font-family:Inter,system-ui;background:#0d1117;color:#f0f6fc;margin:0;padding:24px}main{max-width:1000px;margin:auto}.controls{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0}button,select{background:#21262d;color:#f0f6fc;border:1px solid #30363d;border-radius:8px;padding:10px 14px}.stage{position:relative;height:360px;border:1px solid #30363d;border-radius:16px;background:#161b22;overflow:hidden}.node{position:absolute;padding:18px 20px;border:2px solid #58a6ff;border-radius:14px;background:#0d1117}.request{left:40px;top:140px}.vt{left:250px;top:140px;border-color:#a371f7}.scheduler{left:480px;top:130px;border-color:#39d2c0}.carrier{right:40px;top:70px;border-color:#3fb950}.io{right:40px;bottom:55px;border-color:#d29922}.dot{position:absolute;width:24px;height:24px;border-radius:50%;background:#58a6ff;box-shadow:0 0 18px #58a6ff;left:180px;top:165px;transition:all .9s ease}.explain{margin-top:18px;padding:14px 16px;border-radius:10px;background:#161b22;border:1px solid #30363d}.deadlock .node{border-color:#f85149}.lockA{left:410px;top:75px}.lockB{left:410px;bottom:70px}.threadA{left:55px;top:75px}.threadB{left:55px;bottom:70px}.dead{position:absolute;right:70px;top:135px;padding:30px;border:2px solid #f85149;border-radius:14px;color:#f85149;font-weight:700;opacity:0;transition:opacity .4s}.arrow{position:absolute;height:4px;background:#8b949e;transform-origin:left center}.pulse{animation:pulse .8s infinite alternate}@keyframes pulse{from{box-shadow:0 0 8px #f85149}to{box-shadow:0 0 28px #f85149}}</style></head><body><main><h1>JVM Concurrency Lab</h1><p>Uma visualização simples para entender Virtual Threads, I/O e deadlock.</p><div class="controls"><select id="scenario"><option value="virtual">Virtual Threads</option><option value="deadlock">Deadlock</option></select><button id="play">▶ Play</button><button id="reset">↺ Reset</button></div><div id="stage" class="stage"></div><div id="explain" class="explain">Escolha um cenário e clique em Play.</div></main><script>const stage=document.getElementById('stage'),explain=document.getElementById('explain'),scenario=document.getElementById('scenario');let timers=[];const later=(fn,ms)=>timers.push(setTimeout(fn,ms));function clear(){timers.forEach(clearTimeout);timers=[];stage.innerHTML='';stage.className='stage';explain.textContent='Pronto.'}function node(cls,text){const e=document.createElement('div');e.className='node '+cls;e.textContent=text;stage.appendChild(e);return e}function virtual(){clear();node('request','Request');node('vt','Virtual Thread');node('scheduler','JVM Scheduler');node('carrier','Carrier + CPU');node('io','Esperando I/O');const d=document.createElement('div');d.className='dot';stage.appendChild(d);explain.textContent='1) Chega uma requisição.';later(()=>{d.style.left='365px';explain.textContent='2) A requisição vira uma Virtual Thread.'},900);later(()=>{d.style.left='610px';explain.textContent='3) O scheduler escolhe uma carrier thread.'},1800);later(()=>{d.style.left='840px';d.style.top='95px';d.style.background='#3fb950';explain.textContent='4) A carrier executa na CPU.'},2700);later(()=>{d.style.top='270px';d.style.background='#d29922';explain.textContent='5) Entrou em I/O: a Virtual Thread pode desmontar e liberar a carrier.'},3700);later(()=>{const d2=document.createElement('div');d2.className='dot';d2.style.background='#3fb950';stage.appendChild(d2);later(()=>d2.style.left='610px',50);later(()=>{d2.style.left='840px';d2.style.top='95px';explain.textContent='6) Outra Virtual Thread usa a carrier enquanto a primeira espera I/O.'},900)},4700)}function deadlock(){clear();stage.classList.add('deadlock');node('threadA','Thread A');node('threadB','Thread B');node('lockA','Lock A');node('lockB','Lock B');const dead=document.createElement('div');dead.className='dead';dead.textContent='DEADLOCK';stage.appendChild(dead);explain.textContent='1) Thread A pega Lock A.';later(()=>{explain.textContent='2) Thread B pega Lock B.'},1300);later(()=>{explain.textContent='3) Thread A tenta Lock B, mas ele está ocupado.'},2600);later(()=>{explain.textContent='4) Thread B tenta Lock A. Agora cada uma espera a outra.'},3900);later(()=>{dead.style.opacity='1';dead.classList.add('pulse');explain.textContent='5) Ciclo de espera detectado: ninguém progride.'},5000)}document.getElementById('play').onclick=()=>scenario.value==='virtual'?virtual():deadlock();document.getElementById('reset').onclick=clear;clear();</script></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Laboratório visual e interativo para entender concorrência na JVM: Virtual Threads, deadlocks, race conditions, semáforos e pinning." />
+  <title>JVM Concurrency Lab</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #070b12;
+      --panel: #0d1320;
+      --panel-2: #111a2a;
+      --border: #263247;
+      --text: #edf4ff;
+      --muted: #9fb0c7;
+      --blue: #5aa7ff;
+      --purple: #a879ff;
+      --teal: #37d6c5;
+      --green: #47d16c;
+      --yellow: #f1c75b;
+      --red: #ff6674;
+      --orange: #ff9f43;
+      --shadow: 0 20px 60px rgba(0,0,0,.28);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(90,167,255,.10), transparent 30rem),
+        radial-gradient(circle at 90% 10%, rgba(168,121,255,.10), transparent 28rem),
+        var(--bg);
+      color: var(--text);
+    }
+
+    button, select { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, select:focus-visible { outline: 3px solid rgba(90,167,255,.35); outline-offset: 2px; }
+
+    .shell { max-width: 1440px; margin: 0 auto; padding: 28px; }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    .eyebrow { color: var(--teal); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; font-size: .78rem; }
+    h1 { font-size: clamp(2rem, 5vw, 3.7rem); line-height: 1; margin: 10px 0 12px; letter-spacing: -.04em; }
+    .hero p { max-width: 780px; margin: 0; color: var(--muted); font-size: 1.05rem; line-height: 1.65; }
+    .version-pill {
+      white-space: nowrap;
+      border: 1px solid rgba(71,209,108,.35);
+      background: rgba(71,209,108,.08);
+      color: #8bea9d;
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-weight: 750;
+      font-size: .85rem;
+    }
+
+    .layout { display: grid; grid-template-columns: 290px minmax(0,1fr); gap: 18px; align-items: start; }
+    .sidebar, .card {
+      background: linear-gradient(180deg, rgba(17,26,42,.94), rgba(13,19,32,.94));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+    .sidebar { padding: 14px; position: sticky; top: 18px; }
+    .sidebar-title { padding: 10px 10px 12px; color: var(--muted); font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; }
+    .scenario-button {
+      width: 100%;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text);
+      padding: 13px 12px;
+      border-radius: 14px;
+      text-align: left;
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 10px;
+      align-items: center;
+      transition: .2s ease;
+      margin-bottom: 6px;
+    }
+    .scenario-button:hover { background: rgba(255,255,255,.035); border-color: var(--border); }
+    .scenario-button.active { background: rgba(90,167,255,.10); border-color: rgba(90,167,255,.38); }
+    .scenario-icon { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 10px; background: rgba(255,255,255,.05); font-size: 1.05rem; }
+    .scenario-button strong { display: block; font-size: .95rem; }
+    .scenario-button small { display: block; color: var(--muted); margin-top: 2px; line-height: 1.3; }
+
+    .main { min-width: 0; }
+    .card { padding: 20px; margin-bottom: 18px; }
+
+    .toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; align-items: center; }
+    .toolbar-left, .toolbar-right { display: flex; gap: 9px; flex-wrap: wrap; align-items: center; }
+    .control {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: #111a2a;
+      border-radius: 11px;
+      padding: 10px 13px;
+      transition: .18s ease;
+    }
+    .control:hover { border-color: #405372; background: #152136; }
+    .control.primary { background: linear-gradient(135deg,#397fe0,#7956dc); border-color: transparent; font-weight: 800; }
+    .control.primary:hover { filter: brightness(1.08); }
+    .control:disabled { opacity: .4; cursor: not-allowed; }
+    select.control { cursor: pointer; }
+
+    .progress-wrap { margin-top: 17px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; }
+    .progress { height: 7px; border-radius: 999px; background: #1d293d; overflow: hidden; }
+    .progress > div { height: 100%; width: 0; background: linear-gradient(90deg,var(--blue),var(--purple),var(--teal)); transition: width .3s ease; }
+    .step-counter { font-size: .82rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+    .scenario-head { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:16px; }
+    .scenario-head h2 { margin:0 0 6px; font-size:1.45rem; }
+    .scenario-head p { margin:0; color:var(--muted); line-height:1.55; max-width:760px; }
+    .status-pill { border:1px solid var(--border); border-radius:999px; padding:7px 10px; color:var(--muted); font-size:.82rem; white-space:nowrap; }
+
+    .stage {
+      position: relative;
+      min-height: 500px;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid #26334a;
+      background:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
+        radial-gradient(circle at 50% 20%, rgba(90,167,255,.055), transparent 23rem),
+        #090f19;
+      background-size: 34px 34px, 34px 34px, auto, auto;
+    }
+
+    .scene-node {
+      position: absolute;
+      transform: translate(-50%,-50%);
+      min-width: 145px;
+      padding: 15px 16px;
+      border: 2px solid var(--border);
+      background: rgba(13,19,32,.96);
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 12px 28px rgba(0,0,0,.28);
+      transition: border-color .3s, box-shadow .3s, opacity .3s, transform .3s, background .3s;
+      z-index: 3;
+    }
+    .scene-node strong { display:block; font-size:.95rem; }
+    .scene-node small { display:block; color:var(--muted); margin-top:4px; line-height:1.3; }
+    .scene-node.active { border-color: var(--blue); box-shadow: 0 0 0 5px rgba(90,167,255,.08), 0 0 28px rgba(90,167,255,.24); }
+    .scene-node.good { border-color:var(--green); }
+    .scene-node.warn { border-color:var(--yellow); }
+    .scene-node.bad { border-color:var(--red); box-shadow:0 0 24px rgba(255,102,116,.16); }
+    .scene-node.dim { opacity:.38; }
+
+    .wire { position:absolute; height:3px; background:#33425c; transform-origin:left center; z-index:1; border-radius:999px; transition:background .3s, opacity .3s; }
+    .wire.active { background:linear-gradient(90deg,var(--blue),var(--teal)); box-shadow:0 0 12px rgba(55,214,197,.2); }
+    .wire.bad { background:var(--red); }
+    .wire.dashed { background: repeating-linear-gradient(90deg,#55657e 0 8px,transparent 8px 14px); height:2px; }
+
+    .token {
+      position:absolute;
+      width:24px;
+      height:24px;
+      border-radius:50%;
+      transform:translate(-50%,-50%);
+      background:var(--blue);
+      border:2px solid white;
+      box-shadow:0 0 22px rgba(90,167,255,.7);
+      z-index:7;
+      transition:left .62s cubic-bezier(.2,.8,.2,1), top .62s cubic-bezier(.2,.8,.2,1), background .25s, opacity .25s, transform .25s;
+    }
+    .token::after { content:attr(data-label); position:absolute; top:29px; left:50%; transform:translateX(-50%); color:var(--muted); font-size:.72rem; white-space:nowrap; }
+    .token.green { background:var(--green); box-shadow:0 0 22px rgba(71,209,108,.6); }
+    .token.yellow { background:var(--yellow); box-shadow:0 0 22px rgba(241,199,91,.55); }
+    .token.red { background:var(--red); box-shadow:0 0 24px rgba(255,102,116,.65); }
+    .token.purple { background:var(--purple); box-shadow:0 0 22px rgba(168,121,255,.6); }
+    .token.hidden { opacity:0; transform:translate(-50%,-50%) scale(.45); }
+
+    .queue { position:absolute; display:flex; gap:8px; flex-wrap:wrap; max-width:220px; z-index:4; }
+    .chip { width:36px; height:36px; border-radius:10px; display:grid; place-items:center; border:1px solid #34445f; background:#111a2a; color:#dce7f7; font-weight:800; font-size:.78rem; transition:.3s; }
+    .chip.running { border-color:var(--green); background:rgba(71,209,108,.10); }
+    .chip.waiting { border-color:var(--yellow); background:rgba(241,199,91,.08); }
+    .chip.done { opacity:.35; }
+
+    .metric-row { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:14px; }
+    .metric { border:1px solid var(--border); border-radius:13px; background:#0d1421; padding:11px 13px; }
+    .metric span { display:block; color:var(--muted); font-size:.75rem; text-transform:uppercase; letter-spacing:.05em; }
+    .metric strong { display:block; margin-top:5px; font-size:1.05rem; }
+
+    .explanation { display:grid; grid-template-columns:minmax(0,1.3fr) minmax(260px,.7fr); gap:14px; margin-top:14px; }
+    .explain-box, .why-box { border:1px solid var(--border); border-radius:14px; padding:15px 16px; background:#0d1421; }
+    .explain-label { color:var(--teal); text-transform:uppercase; letter-spacing:.08em; font-size:.72rem; font-weight:900; margin-bottom:7px; }
+    .explain-box h3 { margin:0 0 6px; font-size:1.04rem; }
+    .explain-box p, .why-box p { color:var(--muted); margin:0; line-height:1.55; }
+
+    .log { margin-top:14px; border:1px solid var(--border); border-radius:14px; overflow:hidden; background:#0a101b; }
+    .log-head { display:flex; justify-content:space-between; padding:10px 13px; border-bottom:1px solid var(--border); color:var(--muted); font-size:.8rem; }
+    .log-body { max-height:150px; overflow:auto; padding:7px 13px 11px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.78rem; color:#b8c6d9; }
+    .log-line { padding:4px 0; border-bottom:1px dashed rgba(255,255,255,.04); }
+    .log-line:last-child { border-bottom:0; color:#fff; }
+
+    details.learning { border:1px solid var(--border); border-radius:14px; background:#0d1421; overflow:hidden; }
+    details.learning + details.learning { margin-top:10px; }
+    details.learning summary { cursor:pointer; padding:14px 16px; font-weight:800; }
+    details.learning > div { border-top:1px solid var(--border); padding:14px 16px; color:var(--muted); line-height:1.6; }
+    code { color:#b9d8ff; background:#08101c; padding:.15em .35em; border-radius:5px; }
+    pre { overflow:auto; padding:14px; border-radius:12px; background:#080e18; border:1px solid var(--border); color:#dbe9fb; }
+
+    .deadlock-alert { position:absolute; right:7%; top:50%; transform:translateY(-50%) scale(.8); opacity:0; border:2px solid var(--red); background:rgba(61,10,19,.92); color:#ff9ba5; border-radius:18px; padding:22px 26px; font-weight:900; letter-spacing:.05em; font-size:1.3rem; z-index:8; transition:.35s; box-shadow:0 0 40px rgba(255,102,116,.18); }
+    .deadlock-alert.show { opacity:1; transform:translateY(-50%) scale(1); animation:dangerPulse .85s infinite alternate; }
+    @keyframes dangerPulse { from { box-shadow:0 0 14px rgba(255,102,116,.2); } to { box-shadow:0 0 42px rgba(255,102,116,.48); } }
+
+    .counter { position:absolute; left:50%; top:47%; transform:translate(-50%,-50%); width:130px; height:130px; border-radius:50%; display:grid; place-items:center; border:2px solid var(--teal); background:#0b1520; font-size:2.6rem; font-weight:900; box-shadow:0 0 40px rgba(55,214,197,.12); z-index:3; }
+    .counter::before { content:"contador"; position:absolute; top:-27px; font-size:.76rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); }
+    .local-value { position:absolute; transform:translate(-50%,-50%); border:1px solid var(--border); background:#111a2a; border-radius:10px; padding:8px 10px; z-index:5; color:var(--muted); transition:.3s; }
+
+    .permit { width:54px; height:54px; border-radius:50%; border:2px solid var(--green); background:rgba(71,209,108,.09); display:grid; place-items:center; color:#91eca2; font-weight:900; transition:.3s; }
+    .permit.busy { background:rgba(255,159,67,.12); border-color:var(--orange); color:#ffc17f; }
+
+    .note-current { margin-top:14px; border-left:4px solid var(--teal); background:rgba(55,214,197,.06); padding:12px 14px; border-radius:0 12px 12px 0; color:#c7e9e5; line-height:1.5; }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns:1fr; }
+      .sidebar { position:static; display:flex; overflow:auto; gap:6px; }
+      .sidebar-title { display:none; }
+      .scenario-button { min-width:210px; margin:0; }
+      .stage { min-height:520px; }
+      .metric-row { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+    @media (max-width: 680px) {
+      .shell { padding:16px; }
+      .hero { flex-direction:column; }
+      .card { padding:14px; border-radius:16px; }
+      .toolbar { align-items:stretch; }
+      .toolbar-left, .toolbar-right { width:100%; }
+      .control { flex:1; }
+      .explanation { grid-template-columns:1fr; }
+      .stage { min-height:590px; }
+      .scene-node { min-width:115px; padding:11px 9px; }
+      .scene-node small { display:none; }
+      .scenario-head { flex-direction:column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration:.001ms !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <div>
+        <div class="eyebrow">Visual • Interativo • Passo a passo</div>
+        <h1>JVM Concurrency Lab</h1>
+        <p>Veja concorrência acontecendo em vez de apenas ler sobre ela. Escolha um cenário, avance manualmente ou aperte Play e acompanhe cada mudança dentro da JVM.</p>
+      </div>
+      <div class="version-pill">Java 25 aware</div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" id="scenarioList" aria-label="Cenários"></aside>
+
+      <main class="main">
+        <section class="card">
+          <div class="toolbar">
+            <div class="toolbar-left">
+              <button class="control" id="prevBtn" aria-label="Passo anterior">← Anterior</button>
+              <button class="control primary" id="playBtn">▶ Play</button>
+              <button class="control" id="nextBtn">Próximo →</button>
+              <button class="control" id="resetBtn">↺ Reset</button>
+            </div>
+            <div class="toolbar-right">
+              <label for="speed" style="color:var(--muted);font-size:.82rem">Velocidade</label>
+              <select class="control" id="speed">
+                <option value="1800">0.5×</option>
+                <option value="1100" selected>1×</option>
+                <option value="650">1.7×</option>
+                <option value="360">3×</option>
+              </select>
+            </div>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress"><div id="progressBar"></div></div>
+            <div class="step-counter" id="stepCounter">Passo 1/1</div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="scenario-head">
+            <div>
+              <h2 id="scenarioTitle"></h2>
+              <p id="scenarioSubtitle"></p>
+            </div>
+            <div class="status-pill" id="scenarioStatus">pronto</div>
+          </div>
+
+          <div class="stage" id="stage" aria-live="polite"></div>
+          <div class="metric-row" id="metrics"></div>
+
+          <div class="explanation">
+            <div class="explain-box">
+              <div class="explain-label">O que está acontecendo?</div>
+              <h3 id="stepTitle"></h3>
+              <p id="stepText"></p>
+            </div>
+            <div class="why-box">
+              <div class="explain-label">Por que isso importa?</div>
+              <p id="whyText"></p>
+            </div>
+          </div>
+
+          <div class="log">
+            <div class="log-head"><span>Event log</span><span id="logScenario"></span></div>
+            <div class="log-body" id="logBody"></div>
+          </div>
+        </section>
+
+        <section class="card">
+          <details class="learning" open>
+            <summary>🧠 Modelo mental simples</summary>
+            <div id="mentalModel"></div>
+          </details>
+          <details class="learning">
+            <summary>💻 Exemplo Java</summary>
+            <div><pre><code id="codeSample"></code></pre></div>
+          </details>
+          <details class="learning">
+            <summary>📚 Glossário rápido</summary>
+            <div>
+              <strong>Virtual Thread:</strong> thread leve gerenciada pela JVM.<br />
+              <strong>Carrier Thread:</strong> platform thread na qual uma Virtual Thread é montada para executar.<br />
+              <strong>Race condition:</strong> resultado depende da ordem imprevisível das execuções concorrentes.<br />
+              <strong>Deadlock:</strong> ciclo de espera em que ninguém consegue progredir.<br />
+              <strong>Semaphore:</strong> mecanismo que limita quantas tarefas podem acessar um recurso ao mesmo tempo.
+            </div>
+          </details>
+          <div class="note-current">
+            <strong>Atualização Java 24/25:</strong> bloquear dentro de <code>synchronized</code> deixou de causar o pinning clássico de Virtual Threads com o JEP 491. No Java 25, pinning continua relevante principalmente em chamadas <code>native</code> e foreign functions.
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const stage = $('stage');
+  const metrics = $('metrics');
+  const logBody = $('logBody');
+  const state = { scenario: 'virtual', step: 0, playing: false, timer: null };
+
+  function esc(text) {
+    return String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function node(id, x, y, title, sub='', cls='') {
+    return `<div id="${id}" class="scene-node ${cls}" style="left:${x}%;top:${y}%"><strong>${title}</strong><small>${sub}</small></div>`;
+  }
+  function token(id, x, y, label='', cls='') {
+    return `<div id="${id}" class="token ${cls}" data-label="${label}" style="left:${x}%;top:${y}%"></div>`;
+  }
+  function wire(id, x1, y1, x2, y2, cls='') {
+    const dx=x2-x1, dy=y2-y1, len=Math.hypot(dx,dy), ang=Math.atan2(dy,dx)*180/Math.PI;
+    return `<div id="${id}" class="wire ${cls}" style="left:${x1}%;top:${y1}%;width:${len}%;transform:rotate(${ang}deg)"></div>`;
+  }
+  function setPos(id, x, y, cls='') {
+    const el=$(id); if(!el) return;
+    el.style.left=x+'%'; el.style.top=y+'%';
+    el.className='token '+cls;
+  }
+  function setNode(id, cls='') {
+    const el=$(id); if(el) el.className='scene-node '+cls;
+  }
+  function setWire(id, cls='') {
+    const el=$(id); if(el) el.className='wire '+cls;
+  }
+  function show(id, yes=true) { const el=$(id); if(el) el.style.opacity=yes?'1':'0'; }
+  function metric(label,value){ return `<div class="metric"><span>${label}</span><strong>${value}</strong></div>`; }
+
+  const scenarios = {
+    virtual: {
+      icon:'🧵', name:'Virtual Threads', short:'Scheduler, carriers e I/O',
+      title:'Virtual Threads: muita concorrência com poucas carriers',
+      subtitle:'Acompanhe uma requisição virar Virtual Thread, ser montada numa carrier e liberar essa carrier enquanto espera I/O.',
+      mental:'Pense em Virtual Threads como tarefas leves. Elas não precisam possuir uma thread do sistema operacional durante todo o tempo. Quando uma delas bloqueia em I/O, normalmente pode ser desmontada da carrier e retomada depois.',
+      code:`try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {\n    executor.submit(() -> buscarNoBanco());\n    executor.submit(() -> chamarApi());\n}`,
+      steps:[
+        ['Chega uma requisição','O servidor recebe uma nova requisição. Ainda não há trabalho executando na CPU.','Uma aplicação web recebe milhares dessas ao longo do tempo.'],
+        ['Nasce uma Virtual Thread','A JVM associa o trabalho a uma Virtual Thread leve.','Criar muitas Virtual Threads é bem mais barato do que manter o mesmo número de platform threads.'],
+        ['Scheduler escolhe uma carrier','A Virtual Thread entra no scheduler e é montada numa carrier disponível.','A carrier é uma platform thread real, um recurso bem mais caro.'],
+        ['Executando na CPU','A carrier leva a Virtual Thread até a CPU para executar código.','Enquanto há CPU disponível, o trabalho progride normalmente.'],
+        ['Entrou em I/O','A Virtual Thread começou a esperar banco/rede. Ela pode ser desmontada da carrier.','A carrier não precisa ficar parada só porque uma requisição está esperando I/O.'],
+        ['Outra tarefa usa a carrier','Uma segunda Virtual Thread ocupa a carrier liberada enquanto a primeira espera.','É aqui que Virtual Threads ajudam muito workloads com bastante I/O.'],
+        ['I/O terminou','A primeira Virtual Thread volta a ficar elegível para execução.','Ela pode ser remontada em uma carrier disponível e continuar de onde parou.']
+      ],
+      build(){
+        stage.innerHTML =
+          wire('v-w1',16,48,31,48)+wire('v-w2',39,48,52,48)+wire('v-w3',61,48,76,29)+wire('v-w4',61,50,76,71,'dashed')+
+          node('v-request',10,48,'Request','HTTP')+node('v-vt',35,48,'Virtual Thread','VT-1')+node('v-sched',56,48,'JVM Scheduler','escolhe carrier')+node('v-carrier',82,27,'Carrier Thread','platform thread')+node('v-io',82,73,'I/O','banco / rede','warn')+
+          token('v-token',10,48,'VT-1','hidden')+token('v-token2',35,60,'VT-2','green hidden');
+      },
+      apply(s){
+        ['v-request','v-vt','v-sched','v-carrier','v-io'].forEach(id=>setNode(id,id==='v-io'?'warn':''));
+        ['v-w1','v-w2','v-w3','v-w4'].forEach(id=>setWire(id,id==='v-w4'?'dashed':''));
+        setPos('v-token',10,48,'hidden'); setPos('v-token2',35,60,'green hidden');
+        let m=['0','0','livres','0'];
+        if(s===0){ setNode('v-request','active'); setPos('v-token',10,48,''); m=['1','0','livres','0']; }
+        if(s===1){ setNode('v-vt','active'); setWire('v-w1','active'); setPos('v-token',35,48,''); m=['1','1','livres','0']; }
+        if(s===2){ setNode('v-sched','active'); setWire('v-w2','active'); setPos('v-token',56,48,''); m=['1','1','selecionando','0']; }
+        if(s===3){ setNode('v-carrier','active good'); setWire('v-w3','active'); setPos('v-token',82,27,'green'); m=['1','1','1 ocupada','0']; }
+        if(s===4){ setNode('v-io','active warn'); setWire('v-w4','active'); setPos('v-token',82,73,'yellow'); m=['1','1','liberada','1']; }
+        if(s===5){ setNode('v-carrier','active good'); setPos('v-token',82,73,'yellow'); setPos('v-token2',82,27,'green'); m=['2','2','reutilizada','1']; }
+        if(s===6){ setNode('v-sched','active'); setPos('v-token',56,48,''); setPos('v-token2',82,27,'green'); m=['2','2','ocupada','0']; }
+        metrics.innerHTML=metric('requests',m[0])+metric('virtual threads',m[1])+metric('carrier',m[2])+metric('esperando I/O',m[3]);
+      }
+    },
+
+    deadlock: {
+      icon:'🔒', name:'Deadlock', short:'Dois locks, zero progresso',
+      title:'Deadlock: quando cada thread espera a outra',
+      subtitle:'Veja o ciclo se formar: A segura Lock A, B segura Lock B e cada uma tenta pegar o lock da outra.',
+      mental:'Deadlock não significa apenas “está lento”. Significa que existe um ciclo de dependências. Para evitar, imponha uma ordem consistente na aquisição de locks, reduza regiões críticas e use timeouts quando fizer sentido.',
+      code:`synchronized (lockA) {\n    synchronized (lockB) {\n        // ordem A -> B\n    }\n}\n// todas as threads devem respeitar a mesma ordem`,
+      steps:[
+        ['Thread A pega Lock A','A entra na região protegida por Lock A.','Até aqui tudo está normal.'],
+        ['Thread B pega Lock B','Ao mesmo tempo, B entra na região protegida por Lock B.','Locks diferentes podem ser usados simultaneamente.'],
+        ['A pede Lock B','A precisa de B, mas Lock B já pertence à Thread B. A fica esperando.','Uma espera isolada ainda não é deadlock.'],
+        ['B pede Lock A','B agora precisa de A, mas Lock A pertence à Thread A.','O ciclo de espera acaba de se fechar.'],
+        ['Deadlock','A espera B e B espera A. Nenhuma consegue liberar o lock que a outra precisa.','Sem intervenção, esse fluxo não progride.']
+      ],
+      build(){
+        stage.innerHTML =
+          node('d-ta',14,28,'Thread A','RUNNABLE')+node('d-tb',14,72,'Thread B','RUNNABLE')+
+          node('d-la',48,28,'Lock A','livre')+node('d-lb',48,72,'Lock B','livre')+
+          wire('d-own-a',22,28,40,28)+wire('d-own-b',22,72,40,72)+wire('d-cross-a',22,30,41,67,'dashed')+wire('d-cross-b',22,70,41,33,'dashed')+
+          token('d-a',14,28,'A','')+token('d-b',14,72,'B','purple')+`<div class="deadlock-alert" id="deadAlert">⚠ DEADLOCK<br><span style="font-size:.7rem;font-weight:600">ciclo de espera</span></div>`;
+      },
+      apply(s){
+        ['d-ta','d-tb','d-la','d-lb'].forEach(id=>setNode(id,''));
+        setWire('d-own-a',''); setWire('d-own-b',''); setWire('d-cross-a','dashed'); setWire('d-cross-b','dashed');
+        $('deadAlert').className='deadlock-alert';
+        setPos('d-a',14,28,''); setPos('d-b',14,72,'purple');
+        if(s>=0){ setNode('d-ta','active'); setNode('d-la','good'); setWire('d-own-a','active'); setPos('d-a',48,28,'green'); }
+        if(s>=1){ setNode('d-tb','active'); setNode('d-lb','good'); setWire('d-own-b','active'); setPos('d-b',48,72,'green'); }
+        if(s>=2){ setNode('d-ta','warn'); setNode('d-lb','warn'); setWire('d-cross-a','bad'); setPos('d-a',36,56,'yellow'); }
+        if(s>=3){ setNode('d-tb','warn'); setNode('d-la','warn'); setWire('d-cross-b','bad'); setPos('d-b',36,44,'yellow'); }
+        if(s>=4){ ['d-ta','d-tb','d-la','d-lb'].forEach(id=>setNode(id,'bad')); $('deadAlert').className='deadlock-alert show'; setPos('d-a',36,56,'red'); setPos('d-b',36,44,'red'); }
+        metrics.innerHTML=metric('locks ocupados',s>=1?'2':'1')+metric('threads esperando',s>=3?'2':s>=2?'1':'0')+metric('ciclo',s>=3?'SIM':'não')+metric('progresso',s>=4?'PARADO':'ativo');
+      }
+    },
+
+    race: {
+      icon:'🏁', name:'Race Condition', short:'Esperado 2, resultado 1',
+      title:'Race condition: duas threads atualizando o mesmo valor',
+      subtitle:'As duas threads leem o mesmo estado antes de qualquer uma gravar. O incremento parece simples, mas não é atômico.',
+      mental:'“x++” é uma operação composta: ler x, calcular x+1 e escrever de volta. Se duas threads intercalam essas etapas, uma atualização pode sobrescrever a outra.',
+      code:`var counter = new AtomicInteger();\n\ncounter.incrementAndGet(); // operação atômica`,
+      steps:[
+        ['Estado inicial','O contador compartilhado começa em 0.','Existe apenas uma fonte de estado compartilhado.'],
+        ['Thread A lê 0','A copia o valor 0 para sua variável local.','Ler não bloqueia automaticamente a outra thread.'],
+        ['Thread B também lê 0','Antes de A gravar, B também copia 0.','Agora as duas trabalham com a mesma versão antiga.'],
+        ['A calcula 1','A incrementa sua cópia local para 1.','O contador compartilhado ainda é 0.'],
+        ['B calcula 1','B também calcula 1 a partir de 0.','As duas acham que seu resultado está correto.'],
+        ['A grava 1','A escreve 1 no contador compartilhado.','Por enquanto parece certo.'],
+        ['B grava 1 por cima','B escreve seu 1 e sobrescreve o mesmo valor.','Dois incrementos aconteceram, mas o resultado final ficou 1.']
+      ],
+      build(){
+        stage.innerHTML = node('r-ta',16,27,'Thread A','local = ?')+node('r-tb',16,73,'Thread B','local = ?')+`<div class="counter" id="sharedCounter">0</div><div class="local-value" id="localA" style="left:32%;top:27%">local A = ?</div><div class="local-value" id="localB" style="left:32%;top:73%">local B = ?</div>`+wire('r-wa',23,27,43,43,'dashed')+wire('r-wb',23,73,43,53,'dashed')+`<div id="raceResult" class="deadlock-alert" style="right:6%;border-color:var(--yellow);color:#ffe4a2;background:rgba(55,43,5,.9)">Esperado: 2<br>Obtido: 1</div>`;
+      },
+      apply(s){
+        setNode('r-ta',''); setNode('r-tb',''); setWire('r-wa','dashed'); setWire('r-wb','dashed'); $('raceResult').className='deadlock-alert';
+        $('sharedCounter').textContent = s>=5?'1':'0'; $('localA').textContent='local A = ?'; $('localB').textContent='local B = ?';
+        if(s>=1){ setNode('r-ta','active'); $('localA').textContent='local A = 0'; setWire('r-wa','active'); }
+        if(s>=2){ setNode('r-tb','active'); $('localB').textContent='local B = 0'; setWire('r-wb','active'); }
+        if(s>=3) $('localA').textContent='local A = 1';
+        if(s>=4) $('localB').textContent='local B = 1';
+        if(s>=5){ $('sharedCounter').textContent='1'; setNode('r-ta','good'); }
+        if(s>=6){ $('sharedCounter').textContent='1'; setNode('r-tb','bad'); $('raceResult').className='deadlock-alert show'; }
+        metrics.innerHTML=metric('incrementos feitos','2')+metric('valor esperado','2')+metric('valor atual',s>=5?'1':'0')+metric('atômico?','não');
+      }
+    },
+
+    semaphore: {
+      icon:'🚦', name:'Semaphore', short:'Limite de concorrência',
+      title:'Semaphore: muitas tarefas, poucos recursos caros',
+      subtitle:'Imagine 8 requisições tentando abrir conexão com um recurso que só suporta 3 operações simultâneas.',
+      mental:'Semaphore não torna o código “mais paralelo”. Ele coloca um teto na concorrência para proteger recursos limitados, como conexões, APIs externas ou jobs pesados.',
+      code:`var limit = new Semaphore(3);\nlimit.acquire();\ntry {\n    usarRecursoLimitado();\n} finally {\n    limit.release();\n}`,
+      steps:[
+        ['8 requisições chegam','Todas querem usar o mesmo recurso limitado.','Sem limite, um pico pode esgotar o recurso.'],
+        ['Semaphore tem 3 permits','Existem apenas três permissões disponíveis.','No máximo três tarefas entram de uma vez.'],
+        ['Três entram','R1, R2 e R3 adquirem permits e começam a executar.','As demais não somem; ficam esperando.'],
+        ['Cinco esperam','R4–R8 ficam em fila enquanto os permits estão ocupados.','Backpressure protege o serviço de destino.'],
+        ['Uma tarefa termina','R1 libera um permit.','Liberar no finally evita vazamento de permit em caso de erro.'],
+        ['Próxima tarefa entra','R4 pega o permit recém-liberado e começa.','A fila avança sem ultrapassar o limite 3.']
+      ],
+      build(){
+        const chips=Array.from({length:8},(_,i)=>`<div class="chip" id="s-r${i+1}">R${i+1}</div>`).join('');
+        stage.innerHTML = `<div style="position:absolute;left:5%;top:16%;color:var(--muted);font-size:.8rem;font-weight:800">REQUISIÇÕES</div><div class="queue" style="left:5%;top:22%">${chips}</div>`+
+          node('s-sem',47,50,'Semaphore','3 permits')+
+          `<div style="position:absolute;right:7%;top:27%;display:flex;gap:14px"><div class="permit" id="permit1">P1</div><div class="permit" id="permit2">P2</div><div class="permit" id="permit3">P3</div></div>`+
+          node('s-resource',82,65,'Recurso limitado','DB / API / worker')+wire('s-w1',26,50,40,50)+wire('s-w2',55,50,73,62);
+      },
+      apply(s){
+        for(let i=1;i<=8;i++) $('s-r'+i).className='chip';
+        ['permit1','permit2','permit3'].forEach(id=>$(id).className='permit'); setNode('s-sem',''); setNode('s-resource',''); setWire('s-w1',''); setWire('s-w2','');
+        if(s>=0) for(let i=1;i<=8;i++) $('s-r'+i).classList.add('waiting');
+        if(s>=1) setNode('s-sem','active');
+        if(s>=2){ for(let i=1;i<=3;i++){$('s-r'+i).className='chip running'; $('permit'+i).className='permit busy';} setNode('s-resource','active good'); setWire('s-w2','active'); }
+        if(s>=3){ for(let i=4;i<=8;i++) $('s-r'+i).className='chip waiting'; }
+        if(s>=4){ $('s-r1').className='chip done'; $('permit1').className='permit'; }
+        if(s>=5){ $('s-r4').className='chip running'; $('permit1').className='permit busy'; }
+        const running=s>=5?3:s>=4?2:s>=2?3:0, waiting=s>=5?4:s>=4?5:s>=3?5:s>=0?8:0;
+        metrics.innerHTML=metric('permits','3')+metric('executando',running)+metric('esperando',waiting)+metric('limite excedido?','não');
+      }
+    },
+
+    pinning: {
+      icon:'📌', name:'Pinning no Java 25', short:'Quando a carrier não pode ser liberada',
+      title:'Pinning em Virtual Threads — visão atual no Java 25',
+      subtitle:'Veja a diferença entre um bloqueio que permite unmount e uma situação que mantém a Virtual Thread presa à carrier.',
+      mental:'No Java 25, synchronized deixou de ser o caso clássico de pinning graças ao JEP 491. Ainda pode haver pinning quando uma Virtual Thread executa código native ou foreign function e bloqueia durante essa região.',
+      code:`// Java 25: synchronized normalmente não causa o pinning clássico\nsynchronized (lock) {\n    // VT pode bloquear sem prender a carrier como antes\n}\n\n// Ainda monitore chamadas native / foreign que possam bloquear.`,
+      steps:[
+        ['Virtual Thread está montada','VT-1 executa usando Carrier-1.','Toda Virtual Thread precisa estar montada numa carrier enquanto está efetivamente executando.'],
+        ['Bloqueio normal de I/O','Se VT-1 bloqueia em I/O Java suportado, ela normalmente desmonta.','Carrier-1 fica livre para outra Virtual Thread.'],
+        ['Carrier reutilizada','VT-2 pode usar Carrier-1 enquanto VT-1 espera.','Esse é o comportamento desejado para escalabilidade.'],
+        ['Agora entra em native/foreign','VT-3 chama uma região native/foreign e permanece montada.','Esse é um caso atual em que pinning ainda pode ocorrer.'],
+        ['VT-3 bloqueia nessa região','Como não pode desmontar naquele ponto, Carrier-1 continua ocupada.','Pinning não quebra a correção, mas reduz a escalabilidade.'],
+        ['JFR pode detectar','O evento jdk.VirtualThreadPinned ajuda a diagnosticar pinning prolongado.','Meça antes de otimizar; pinning curto nem sempre é um problema real.']
+      ],
+      build(){
+        stage.innerHTML=node('p-vt',17,36,'Virtual Thread','VT-1')+node('p-carrier',48,36,'Carrier-1','platform thread')+node('p-cpu',80,36,'CPU','executando')+node('p-io',17,72,'I/O','espera normal','warn')+node('p-native',48,72,'native / foreign','pode causar pinning','bad')+node('p-jfr',80,72,'JFR','VirtualThreadPinned')+wire('p-w1',25,36,40,36)+wire('p-w2',56,36,72,36)+wire('p-w3',20,42,20,64,'dashed')+wire('p-w4',48,44,48,64,'dashed')+wire('p-w5',56,72,72,72,'dashed')+token('p-t1',17,36,'VT-1','')+token('p-t2',17,50,'VT-2','green hidden');
+      },
+      apply(s){
+        ['p-vt','p-carrier','p-cpu','p-io','p-native','p-jfr'].forEach(id=>setNode(id,id==='p-io'?'warn':id==='p-native'?'bad':''));
+        ['p-w1','p-w2','p-w3','p-w4','p-w5'].forEach(id=>setWire(id,id==='p-w3'||id==='p-w4'||id==='p-w5'?'dashed':''));
+        setPos('p-t1',17,36,''); setPos('p-t2',17,50,'green hidden');
+        if(s===0){ setNode('p-vt','active'); setNode('p-carrier','active'); setPos('p-t1',48,36,''); }
+        if(s===1){ setNode('p-io','active warn'); setPos('p-t1',17,72,'yellow'); setNode('p-carrier','good'); }
+        if(s===2){ setPos('p-t1',17,72,'yellow'); setPos('p-t2',48,36,'green'); setNode('p-carrier','active good'); }
+        if(s===3){ setNode('p-native','active bad'); setPos('p-t1',48,72,'red'); }
+        if(s===4){ setNode('p-native','active bad'); setNode('p-carrier','bad'); setPos('p-t1',48,72,'red'); }
+        if(s===5){ setNode('p-jfr','active'); setWire('p-w5','bad'); setPos('p-t1',48,72,'red'); }
+        metrics.innerHTML=metric('VT esperando',s===1||s===2?'I/O':s>=3?'native/foreign':'não')+metric('carrier livre?',s===1||s===2?'SIM':s>=4?'NÃO':'ocupada')+metric('pinning?',s>=4?'SIM':'não')+metric('Java','25');
+      }
+    }
+  };
+
+  function renderSidebar(){
+    $('scenarioList').innerHTML='<div class="sidebar-title">Escolha um cenário</div>'+Object.entries(scenarios).map(([key,s])=>`
+      <button class="scenario-button ${key===state.scenario?'active':''}" data-scenario="${key}">
+        <span class="scenario-icon">${s.icon}</span><span><strong>${s.name}</strong><small>${s.short}</small></span>
+      </button>`).join('');
+    document.querySelectorAll('.scenario-button').forEach(btn=>btn.addEventListener('click',()=>selectScenario(btn.dataset.scenario)));
+  }
+
+  function current(){ return scenarios[state.scenario]; }
+
+  function selectScenario(key){
+    stop(); state.scenario=key; state.step=0; renderSidebar(); buildScenario(); renderStep();
+  }
+
+  function buildScenario(){
+    const s=current();
+    $('scenarioTitle').textContent=s.title;
+    $('scenarioSubtitle').textContent=s.subtitle;
+    $('mentalModel').innerHTML=s.mental;
+    $('codeSample').textContent=s.code;
+    $('logScenario').textContent=s.name;
+    logBody.innerHTML='';
+    s.build();
+  }
+
+  function renderStep(){
+    const s=current(), info=s.steps[state.step];
+    s.apply(state.step);
+    $('stepTitle').textContent=info[0]; $('stepText').textContent=info[1]; $('whyText').textContent=info[2];
+    $('stepCounter').textContent=`Passo ${state.step+1}/${s.steps.length}`;
+    $('progressBar').style.width=((state.step+1)/s.steps.length*100)+'%';
+    $('prevBtn').disabled=state.step===0; $('nextBtn').disabled=state.step===s.steps.length-1;
+    $('scenarioStatus').textContent=state.step===s.steps.length-1?'fim do cenário':state.playing?'reproduzindo':'pausado';
+    const stamp=String(state.step+1).padStart(2,'0');
+    const lines=[...logBody.querySelectorAll('.log-line')];
+    if(lines.length>state.step) lines.slice(state.step).forEach(el=>el.remove());
+    if(logBody.children.length===state.step){
+      const line=document.createElement('div'); line.className='log-line'; line.textContent=`[${stamp}] ${info[0]} — ${info[1]}`; logBody.appendChild(line);
+    }
+    logBody.scrollTop=logBody.scrollHeight;
+  }
+
+  function next(){
+    if(state.step < current().steps.length-1){ state.step++; renderStep(); return true; }
+    return false;
+  }
+  function prev(){ if(state.step>0){ state.step--; renderStep(); } }
+  function reset(){ stop(); state.step=0; buildScenario(); renderStep(); }
+  function stop(){ state.playing=false; clearTimeout(state.timer); state.timer=null; $('playBtn').textContent='▶ Play'; }
+  function schedule(){
+    if(!state.playing) return;
+    const delay=Number($('speed').value);
+    state.timer=setTimeout(()=>{
+      if(next()) schedule(); else stop();
+    },delay);
+  }
+  function togglePlay(){
+    if(state.playing){ stop(); $('scenarioStatus').textContent='pausado'; return; }
+    if(state.step===current().steps.length-1){ state.step=0; buildScenario(); renderStep(); }
+    state.playing=true; $('playBtn').textContent='⏸ Pause'; $('scenarioStatus').textContent='reproduzindo'; schedule();
+  }
+
+  $('prevBtn').addEventListener('click',()=>{ stop(); prev(); });
+  $('nextBtn').addEventListener('click',()=>{ stop(); next(); });
+  $('resetBtn').addEventListener('click',reset);
+  $('playBtn').addEventListener('click',togglePlay);
+  $('speed').addEventListener('change',()=>{ if(state.playing){ clearTimeout(state.timer); schedule(); } });
+  document.addEventListener('keydown',(e)=>{
+    if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+    if(e.code==='Space'){ e.preventDefault(); togglePlay(); }
+    if(e.code==='ArrowRight'){ stop(); next(); }
+    if(e.code==='ArrowLeft'){ stop(); prev(); }
+  });
+
+  renderSidebar(); buildScenario(); renderStep();
+</script>
+</body>
+</html>
