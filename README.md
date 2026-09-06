@@ -40,35 +40,27 @@ Alguns temas que fazem parte do meu estudo e dos projetos que desenvolvo:
 
 ---
 
-## 🧵 JVM & Concorrência — visão visual
+## 🧵 JVM & Concorrência — visão animada
 
-Um dos assuntos que mais estudo é como a JVM coordena trabalho concorrente, virtual threads e locks.
+Para quem não trabalha com concorrência no dia a dia, a ideia é enxergar o sistema como um fluxo: uma requisição chega, vira trabalho dentro da JVM e disputa recursos para executar.
 
-```mermaid
-flowchart LR
-    R1[Request A] --> V1[Virtual Thread A]
-    R2[Request B] --> V2[Virtual Thread B]
-    R3[Request C] --> V3[Virtual Thread C]
-    V1 --> S[JVM Scheduler]
-    V2 --> S
-    V3 --> S
-    S --> C1[Carrier Thread 1]
-    S --> C2[Carrier Thread 2]
-    C1 --> CPU[CPU]
-    C2 --> CPU
-    V1 -. espera por I/O .-> P[park / unmount]
-    P -. libera a carrier .-> S
-```
+### Virtual Threads e Carrier Threads
 
-### Deadlock em uma imagem
+<div align="center">
+  <img src="./assets/virtual-threads-animated.svg" alt="Animação mostrando uma requisição passando por Virtual Thread, JVM Scheduler, Carrier Thread, CPU e I/O" width="100%" />
+</div>
 
-```mermaid
-flowchart LR
-    T1[Thread 1] -->|possui| A[Lock A]
-    T1 -->|espera| B[Lock B]
-    T2[Thread 2] -->|possui| B
-    T2 -->|espera| A
-```
+**Como ler:** a bolinha representa uma requisição. Quando ela entra em I/O, a Virtual Thread pode deixar a carrier livre para outra tarefa continuar usando a CPU.
+
+### Deadlock acontecendo passo a passo
+
+<div align="center">
+  <img src="./assets/deadlock-animated.svg" alt="Animação mostrando duas threads entrando em deadlock ao esperar locks uma da outra" width="100%" />
+</div>
+
+**Como ler:** Thread A segura o Lock A e espera B. Thread B segura o Lock B e espera A. Quando esse ciclo fecha, nenhuma das duas consegue continuar.
+
+🧪 **[Ver o código do JVM Concurrency Lab interativo](docs/jvm-concurrency-lab.html)** — inclui botões de Play/Reset e cenários de Virtual Threads e Deadlock. O repositório também está preparado para publicar o laboratório via GitHub Pages.
 
 📚 **[Ver guia visual completo: virtual threads, pinning, race conditions, deadlocks, MVCC e checklist mental →](docs/jvm-concurrency-visual.md)**
 
