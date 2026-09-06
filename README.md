@@ -1,83 +1,68 @@
 <!-- Banner -->
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F2027,50:203A43,100:2C5364&height=200&section=header&text=Jose%20Vinicius%20👨‍💻&fontSize=42&fontColor=ffffff&fontAlignY=35&desc=Java%20%7C%20Spring%20Boot%20%7C%20Angular%20%7C%20VS%20Code%20Extension%20Developer&descSize=16&descAlignY=55" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F2027,50:203A43,100:2C5364&height=200&section=header&text=Jose%20Vinicius%20👨‍💻&fontSize=42&fontColor=ffffff&fontAlignY=35&desc=Java%20%7C%20Spring%20Boot%20%7C%20PostgreSQL%20%7C%20Arquitetura%20de%20Software&descSize=16&descAlignY=55" />
 </div>
 
 <h2 align="center">👋 Olá! Eu sou o Vinicius</h2>
 
 <p align="center">
-  Desenvolvedor Full Stack apaixonado por tecnologia, focado em criar soluções escaláveis,
-  bem estruturadas e com código limpo.
+  Desenvolvedor com foco em <strong>backend, arquitetura e sistemas distribuídos</strong>, trabalhando principalmente com Java, Spring Boot, PostgreSQL, Redis, mensageria e containers.
 </p>
 
 <p align="center">
-  Tenho experiência com <strong>Java</strong>, <strong>Spring Boot</strong>, <strong>Angular</strong>,
-  arquitetura limpa, boas práticas de desenvolvimento e criação de ferramentas para desenvolvedores.
+  Gosto de entender não só <em>como</em> implementar, mas também <strong>por que uma decisão de arquitetura faz sentido</strong> em termos de concorrência, consistência, escalabilidade e operação.
 </p>
 
 ---
 
 ## 🚀 Sobre mim
 
-Sou desenvolvedor com foco em backend e frontend, trabalhando principalmente com tecnologias modernas do ecossistema Java e Angular.
+Minha principal área é backend com Java e Spring. Tenho estudado e construído projetos envolvendo multi-tenancy, cache distribuído, mensageria, observabilidade, WebSocket, concorrência na JVM e infraestrutura com Docker/Kubernetes.
 
-Gosto de construir aplicações bem organizadas, com código limpo, testável e preparado para crescer. Também tenho interesse em arquitetura de software, automação, produtividade para devs e desenvolvimento de extensões.
+Também curso mestrado e venho trabalhando com Machine Learning/Deep Learning, mantendo esse estudo como uma segunda frente técnica.
 
 ---
 
-## 🧩 Extensão VS Code
+## 🏗️ Arquitetura e backend
 
-Criei e publiquei minha própria extensão para o Visual Studio Code:
+Alguns temas que fazem parte do meu estudo e dos projetos que desenvolvo:
 
-### **MCP Easy Setup**
+- Java moderno e Spring Boot
+- PostgreSQL, transações, MVCC, locks e concorrência
+- Redis para sessão e cache
+- RabbitMQ e processamento assíncrono
+- APIs REST e WebSocket
+- Multi-tenancy e isolamento por tenant
+- Docker, Traefik e Kubernetes
+- Observabilidade com métricas e tracing
+- Sistemas distribuídos, idempotência e consistência
+- Concorrência na JVM, virtual threads e sincronização
 
-Uma extensão guiada para ajudar desenvolvedores a criarem integrações MCP de forma mais simples, evitando configuração manual complexa com JSON.
+---
+
+## 🔨 Projetos em destaque
+
+### SaaS multi-tenant de e-commerce
+
+Projeto de estudo e produto SaaS com lojas separadas por domínio/subdomínio, painel administrativo por tenant, catálogo, pedidos, Redis, PostgreSQL, Traefik e deploy em VPS com Docker Compose.
+
+### Modern Concurrency in Java
+
+Repositório dedicado a experimentos com concorrência em Java, incluindo virtual threads, executors, sincronização, semáforos e diagnóstico de problemas concorrentes.
+
+### Machine Learning / Deep Learning
+
+Projetos acadêmicos e experimentos voltados a classificação de imagens e modelos de aprendizado de máquina aplicados ao mestrado.
+
+### MCP Easy Setup
+
+Extensão para Visual Studio Code que simplifica a configuração de integrações MCP.
 
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=Joseviniciusdasilvadesouzadesouza.mcp-easy-setup">
     <img src="https://img.shields.io/badge/VS%20Code-MCP%20Easy%20Setup-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white" />
   </a>
 </p>
-
-<p align="center">
-  <img src="https://img.shields.io/visual-studio-marketplace/v/Joseviniciusdasilvadesouzadesouza.mcp-easy-setup?style=for-the-badge&label=Version&color=blue" />
-  <img src="https://img.shields.io/visual-studio-marketplace/i/Joseviniciusdasilvadesouzadesouza.mcp-easy-setup?style=for-the-badge&label=Installs&color=success" />
-</p>
-
----
-
-## 💼 Habilidades principais
-
-### Backend
-
-- Java moderno
-- Spring Boot nas versões mais recentes
-- APIs REST
-- Spring Data JPA
-- Segurança e autenticação
-- Arquitetura limpa
-- Microsserviços
-- Integração com banco de dados
-
-### Frontend
-
-- Angular nas versões mais recentes
-- TypeScript
-- Componentização
-- Consumo de APIs
-- Interfaces responsivas
-- Organização de módulos e serviços
-
-### Boas práticas
-
-- Clean Code
-- TDD
-- DDD
-- SOLID
-- Código testável
-- Separação de responsabilidades
-- Padronização de arquitetura
-- Refatoração contínua
 
 ---
 
@@ -86,45 +71,40 @@ Uma extensão guiada para ajudar desenvolvedores a criarem integrações MCP de 
 <p align="center">
   <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" />
   <img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" />
-  <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" />
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
-  <img src="https://img.shields.io/badge/VS%20Code%20Extension-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white" />
+  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white" />
+  <img src="https://img.shields.io/badge/RabbitMQ-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white" />
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
   <img src="https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" />
-  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/Traefik-24A1C1?style=for-the-badge&logo=traefikproxy&logoColor=white" />
   <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" />
 </p>
 
----
-
-## 🧠 Arquitetura e práticas que valorizo
-
 <p align="center">
-  <img src="https://img.shields.io/badge/Clean%20Code-000000?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/TDD-25A162?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/DDD-6A5ACD?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/SOLID-FFB300?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/REST%20APIs-005571?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/VS%20Code%20Extension-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white" />
 </p>
 
 ---
 
-## 📌 Atualmente estudando e evoluindo em
+## 📚 Atualmente estudando
 
-- Arquitetura de software
-- Microsserviços
-- Inteligência Artificial aplicada
-- Extensões para VS Code
-- Integrações MCP
-- Boas práticas com Java, Spring Boot e Angular
+- Arquitetura de software e sistemas distribuídos
+- PostgreSQL avançado e concorrência
+- Concorrência na JVM e virtual threads
+- Observabilidade e operação de serviços
+- Machine Learning e Deep Learning
+- Integrações MCP e ferramentas para desenvolvedores
 
 ---
 
 <div align="center">
-  <strong>💻 Construindo soluções com código limpo, arquitetura e propósito.</strong>
+  <strong>💻 Backend, arquitetura e engenharia de software com foco em entender o sistema por inteiro.</strong>
 </div>
 
 <!-- Footer -->
