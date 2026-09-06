@@ -40,6 +40,40 @@ Alguns temas que fazem parte do meu estudo e dos projetos que desenvolvo:
 
 ---
 
+## 🧵 JVM & Concorrência — visão visual
+
+Um dos assuntos que mais estudo é como a JVM coordena trabalho concorrente, virtual threads e locks.
+
+```mermaid
+flowchart LR
+    R1[Request A] --> V1[Virtual Thread A]
+    R2[Request B] --> V2[Virtual Thread B]
+    R3[Request C] --> V3[Virtual Thread C]
+    V1 --> S[JVM Scheduler]
+    V2 --> S
+    V3 --> S
+    S --> C1[Carrier Thread 1]
+    S --> C2[Carrier Thread 2]
+    C1 --> CPU[CPU]
+    C2 --> CPU
+    V1 -. espera por I/O .-> P[park / unmount]
+    P -. libera a carrier .-> S
+```
+
+### Deadlock em uma imagem
+
+```mermaid
+flowchart LR
+    T1[Thread 1] -->|possui| A[Lock A]
+    T1 -->|espera| B[Lock B]
+    T2[Thread 2] -->|possui| B
+    T2 -->|espera| A
+```
+
+📚 **[Ver guia visual completo: virtual threads, pinning, race conditions, deadlocks, MVCC e checklist mental →](docs/jvm-concurrency-visual.md)**
+
+---
+
 ## 🔨 Projetos em destaque
 
 ### SaaS multi-tenant de e-commerce
