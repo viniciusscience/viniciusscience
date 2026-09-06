@@ -44,17 +44,17 @@ Alguns temas que fazem parte do meu estudo e dos projetos que desenvolvo:
 
 ### SaaS multi-tenant de e-commerce
 
-Projeto de estudo e produto SaaS com lojas separadas por domínio/subdomínio, painel administrativo por tenant, catálogo, pedidos, Redis, PostgreSQL, Traefik e deploy em VPS com Docker Compose.
+Projeto de estudo e produto SaaS com lojas separadas por domínio/subdomínio, painel administrativo por tenant, catálogo, pedidos, Redis, PostgreSQL, Traefik e deploy em VPS com Docker Compose. O repositório principal permanece privado enquanto o produto está em evolução.
 
-### Modern Concurrency in Java
+### [Modern Concurrency in Java](https://github.com/viniciusscience/modern-concurrency-java-book)
 
 Repositório dedicado a experimentos com concorrência em Java, incluindo virtual threads, executors, sincronização, semáforos e diagnóstico de problemas concorrentes.
 
-### Machine Learning / Deep Learning
+### [Machine Learning / Deep Learning](https://github.com/viniciusscience/Machine-Learning-Mestrado)
 
 Projetos acadêmicos e experimentos voltados a classificação de imagens e modelos de aprendizado de máquina aplicados ao mestrado.
 
-### MCP Easy Setup
+### [MCP Easy Setup](https://github.com/viniciusscience/mcp-easy-setup)
 
 Extensão para Visual Studio Code que simplifica a configuração de integrações MCP.
 
