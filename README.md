@@ -1,6 +1,6 @@
 <!-- Banner -->
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F2027,50:203A43,100:2C5364&height=200&section=header&text=Jose%20Vinicius%20👨‍💻&fontSize=42&fontColor=ffffff&fontAlignY=35&desc=Software%20Engineering%20%7C%20Java%20%7C%20Spring%20Boot%20%7C%20Computer%20Vision%20%7C%20Deep%20Learning&descSize=15&descAlignY=55" />
+  <img src="./assets/profile-banner.svg" alt="Jose Vinicius — Software Engineering, Java, Spring Boot, Computer Vision e Deep Learning" width="100%" />
 </div>
 
 <h2 align="center">👋 Olá! Eu sou o Vinicius</h2>
