@@ -1,29 +1,62 @@
 <!-- Banner -->
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F2027,50:203A43,100:2C5364&height=200&section=header&text=Jose%20Vinicius%20👨‍💻&fontSize=42&fontColor=ffffff&fontAlignY=35&desc=Java%20%7C%20Spring%20Boot%20%7C%20PostgreSQL%20%7C%20Arquitetura%20de%20Software&descSize=16&descAlignY=55" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F2027,50:203A43,100:2C5364&height=200&section=header&text=Jose%20Vinicius%20👨‍💻&fontSize=42&fontColor=ffffff&fontAlignY=35&desc=Software%20Engineering%20%7C%20Java%20%7C%20Spring%20Boot%20%7C%20Computer%20Vision%20%7C%20Deep%20Learning&descSize=15&descAlignY=55" />
 </div>
 
 <h2 align="center">👋 Olá! Eu sou o Vinicius</h2>
 
 <p align="center">
-  Desenvolvedor com foco em <strong>backend, arquitetura e sistemas distribuídos</strong>, trabalhando principalmente com Java, Spring Boot, PostgreSQL, Redis, mensageria e containers.
+  <strong>Software Engineer</strong> com foco em backend, arquitetura e sistemas distribuídos.<br/>
+  Mestrando em <strong>Computação Aplicada</strong>, com pesquisa em <strong>Visão Computacional e Deep Learning</strong>.
 </p>
 
 <p align="center">
-  Gosto de entender não só <em>como</em> implementar, mas também <strong>por que uma decisão de arquitetura faz sentido</strong> em termos de concorrência, consistência, escalabilidade e operação.
+  Java • Spring Boot • PostgreSQL • Sistemas Distribuídos • Computer Vision • Deep Learning
 </p>
 
 ---
 
 ## 🚀 Sobre mim
 
-Minha principal área é backend com Java e Spring. Tenho estudado e construído projetos envolvendo multi-tenancy, cache distribuído, mensageria, observabilidade, WebSocket, concorrência na JVM e infraestrutura com Docker/Kubernetes.
+Minha principal atuação profissional é backend com Java e Spring Boot, trabalhando e estudando temas como arquitetura de software, PostgreSQL, multi-tenancy, mensageria, observabilidade, concorrência na JVM e infraestrutura com containers.
 
-Também curso mestrado e venho trabalhando com Machine Learning/Deep Learning, mantendo esse estudo como uma segunda frente técnica.
+No mestrado em Computação Aplicada, desenvolvo uma segunda frente técnica voltada a Inteligência Artificial, especialmente **Visão Computacional e Deep Learning**, conectando engenharia de software com pesquisa aplicada.
+
+Gosto de entender não apenas *como* implementar uma solução, mas **por que uma decisão técnica faz sentido** em termos de concorrência, consistência, escalabilidade, desempenho e operação.
 
 ---
 
-## 🏗️ Arquitetura e backend
+## 🔬 Pesquisa — Computer Vision & Deep Learning
+
+Minha pesquisa de mestrado envolve o **desenvolvimento de modelos de aprendizagem profunda para identificação de grandes peixes migratórios capturados pela pesca oceânica brasileira**.
+
+Atualmente venho explorando:
+
+- Classificação de imagens com redes neurais convolucionais (CNNs)
+- Transfer Learning e Fine-Tuning
+- ConvNeXt e ResNet
+- Preparação, organização e análise de datasets de imagens
+- Data augmentation e estratégias para reduzir overfitting
+- Avaliação de modelos com accuracy, top-k accuracy e matrizes de confusão
+- TensorFlow / Keras para treinamento e experimentação
+- Visão computacional aplicada a imagens e, futuramente, vídeo
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Research-Computer%20Vision-5C6BC0?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Deep%20Learning-CNNs-FF6F00?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Transfer%20Learning-ConvNeXt%20%7C%20ResNet-7952B3?style=for-the-badge" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" />
+  <img src="https://img.shields.io/badge/Keras-D00000?style=for-the-badge&logo=keras&logoColor=white" />
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white" />
+</p>
+
+---
+
+## 🏗️ Arquitetura e Backend
 
 Alguns temas que fazem parte do meu estudo e dos projetos que desenvolvo:
 
@@ -89,6 +122,10 @@ Uma coleção curta e visual dos assuntos que venho estudando e aplicando:
 
 ## 🔨 Projetos em destaque
 
+### 🐟 [Machine Learning / Deep Learning — Mestrado](https://github.com/viniciusscience/Machine-Learning-Mestrado)
+
+Experimentos acadêmicos de Machine Learning e Deep Learning, com foco atual em **classificação de imagens, CNNs, Transfer Learning, ConvNeXt e ResNet** aplicados à pesquisa de identificação de espécies de peixes.
+
 ### SaaS multi-tenant de e-commerce
 
 Projeto de estudo e produto SaaS com lojas separadas por domínio/subdomínio, painel administrativo por tenant, catálogo, pedidos, Redis, PostgreSQL, Traefik e deploy em VPS com Docker Compose. O repositório principal permanece privado enquanto o produto está em evolução.
@@ -96,10 +133,6 @@ Projeto de estudo e produto SaaS com lojas separadas por domínio/subdomínio, p
 ### [Modern Concurrency in Java](https://github.com/viniciusscience/modern-concurrency-java-book)
 
 Repositório dedicado a experimentos com concorrência em Java, incluindo virtual threads, executors, sincronização, semáforos e diagnóstico de problemas concorrentes.
-
-### [Machine Learning / Deep Learning](https://github.com/viniciusscience/Machine-Learning-Mestrado)
-
-Projetos acadêmicos e experimentos voltados a classificação de imagens e modelos de aprendizado de máquina aplicados ao mestrado.
 
 ### [MCP Easy Setup](https://github.com/viniciusscience/mcp-easy-setup)
 
@@ -114,6 +147,8 @@ Extensão para Visual Studio Code que simplifica a configuração de integraçõ
 ---
 
 ## 🛠️ Tech Stack
+
+### Backend & Infra
 
 <p align="center">
   <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" />
@@ -130,10 +165,20 @@ Extensão para Visual Studio Code que simplifica a configuração de integraçõ
   <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" />
 </p>
 
+### AI & Computer Vision
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" />
+  <img src="https://img.shields.io/badge/Keras-D00000?style=for-the-badge&logo=keras&logoColor=white" />
+  <img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white" />
+</p>
+
+### Frontend & Tools
+
 <p align="center">
   <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" />
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/VS%20Code%20Extension-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white" />
 </p>
 
@@ -141,17 +186,18 @@ Extensão para Visual Studio Code que simplifica a configuração de integraçõ
 
 ## 📚 Atualmente estudando
 
+- Visão Computacional e Deep Learning
+- CNNs, Transfer Learning e Fine-Tuning
+- ConvNeXt, ResNet e arquiteturas modernas para classificação de imagens
 - Arquitetura de software e sistemas distribuídos
 - PostgreSQL avançado e concorrência
 - Concorrência na JVM e virtual threads
 - Observabilidade e operação de serviços
-- Machine Learning e Deep Learning
-- Integrações MCP e ferramentas para desenvolvedores
 
 ---
 
 <div align="center">
-  <strong>💻 Backend, arquitetura e engenharia de software com foco em entender o sistema por inteiro.</strong>
+  <strong>💻 Software Engineering • Distributed Systems • Computer Vision • Deep Learning</strong>
 </div>
 
 <!-- Footer -->
