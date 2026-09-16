@@ -1,0 +1,80 @@
+<svg width="1600" height="520" viewBox="0 0 1600 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#03132D"/>
+      <stop offset="0.5" stop-color="#06284A"/>
+      <stop offset="1" stop-color="#0A7E83"/>
+    </linearGradient>
+    <linearGradient id="nameGrad" x1="560" y1="0" x2="1040" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#CDEEFF"/>
+    </linearGradient>
+    <linearGradient id="waveGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#157BFF" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#32E6E2" stop-opacity="0.35"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="520" fill="url(#bg)"/>
+
+  <g opacity="0.35" fill="#57B9FF">
+    <circle cx="48" cy="48" r="2.2"/><circle cx="80" cy="48" r="2.2"/><circle cx="112" cy="48" r="2.2"/><circle cx="144" cy="48" r="2.2"/><circle cx="176" cy="48" r="2.2"/>
+    <circle cx="48" cy="80" r="2.2"/><circle cx="80" cy="80" r="2.2"/><circle cx="112" cy="80" r="2.2"/><circle cx="144" cy="80" r="2.2"/><circle cx="176" cy="80" r="2.2"/>
+    <circle cx="48" cy="112" r="2.2"/><circle cx="80" cy="112" r="2.2"/><circle cx="112" cy="112" r="2.2"/><circle cx="144" cy="112" r="2.2"/><circle cx="176" cy="112" r="2.2"/>
+  </g>
+
+  <g opacity="0.8" stroke="url(#waveGrad)" fill="none">
+    <path d="M-100 345C40 280 90 320 170 380C250 440 340 470 520 445C700 420 860 425 1010 450C1160 475 1280 455 1415 415C1490 393 1560 382 1700 405" stroke-width="1.8"/>
+    <path d="M-120 362C20 300 110 338 190 395C270 452 355 482 530 462C705 442 875 437 1030 462C1185 487 1302 465 1435 425C1515 401 1588 392 1715 414" stroke-width="1.8" opacity="0.8"/>
+    <path d="M-145 378C0 320 125 355 210 410C295 465 372 494 545 479C718 464 892 451 1052 476C1212 501 1328 479 1452 439C1533 413 1600 402 1720 422" stroke-width="1.8" opacity="0.7"/>
+    <path d="M-170 395C-15 340 140 372 226 425C312 478 392 505 565 495C738 485 910 468 1072 491C1234 514 1352 490 1475 452C1558 426 1623 415 1735 433" stroke-width="1.8" opacity="0.55"/>
+    <path d="M-195 412C-30 360 157 392 244 441C331 490 414 517 583 511C752 505 927 485 1088 506C1249 527 1372 506 1498 469C1580 444 1640 432 1748 447" stroke-width="1.8" opacity="0.45"/>
+  </g>
+
+  <g opacity="0.16" stroke="#3CA6FF" fill="none">
+    <path d="M-65 405C35 150 220 160 315 390" stroke-width="1.5"/>
+    <path d="M-95 420C15 120 250 130 345 400" stroke-width="1.2"/>
+  </g>
+
+  <g fill="#38C7FF" filter="url(#softGlow)">
+    <circle cx="205" cy="400" r="4"/>
+    <circle cx="575" cy="399" r="4"/>
+    <circle cx="1185" cy="112" r="5"/>
+    <circle cx="1245" cy="160" r="5"/>
+    <circle cx="1455" cy="94" r="4"/>
+  </g>
+
+  <g opacity="0.45" stroke="#32DDE2" stroke-width="2" fill="none">
+    <path d="M1185 110H1338L1425 35H1540"/>
+    <path d="M1242 168H1395L1468 102H1582"/>
+    <path d="M1387 292H1485V378H1540"/>
+    <path d="M1328 350H1430V440H1508"/>
+  </g>
+
+  <g transform="translate(1470 235)" opacity="0.68">
+    <ellipse cx="0" cy="0" rx="150" ry="88" stroke="#3EE6E2" stroke-width="1.8" fill="none"/>
+    <ellipse cx="0" cy="0" rx="118" ry="69" stroke="#2ABBD0" stroke-width="1.1" fill="none" opacity="0.6"/>
+    <ellipse cx="0" cy="0" rx="82" ry="82" stroke="#3EE6E2" stroke-width="1.2" fill="none"/>
+    <ellipse cx="0" cy="0" rx="47" ry="47" stroke="#79F8FF" stroke-width="1.3" fill="none"/>
+    <circle cx="0" cy="0" r="7" fill="#69F3FF" filter="url(#glow)"/>
+    <path d="M-150 0H-40M40 0H150M0-88V-20M0 20V88" stroke="#37D3DF" stroke-width="1" opacity="0.55"/>
+    <g stroke="#30C6D5" stroke-width="0.8" opacity="0.35">
+      <path d="M-120 -18L-70 -55L-20 -28L-36 21L-89 40Z"/>
+      <path d="M122 -17L71 -55L20 -29L35 20L86 39Z"/>
+      <path d="M-12 -70L44 -45L52 10L0 26L-52 10L-45 -44Z"/>
+    </g>
+  </g>
+
+  <g text-anchor="middle">
+    <text x="800" y="240" fill="url(#nameGrad)" font-size="92" font-weight="700" font-family="Segoe UI, Inter, Arial, sans-serif">Jose Vinicius</text>
+    <text x="800" y="318" fill="#E6F3FF" opacity="0.93" font-size="40" font-weight="400" font-family="Segoe UI, Inter, Arial, sans-serif">Software Engineering | Java | Spring Boot | Computer Vision | Deep Learning</text>
+  </g>
+</svg>
