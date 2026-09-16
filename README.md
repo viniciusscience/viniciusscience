@@ -30,12 +30,14 @@ Tenho interesse especial por decisões técnicas relacionadas a **concorrência,
 
 > **Desenvolvimento de modelos de aprendizagem profunda para identificação de grandes peixes migratórios capturados pela pesca oceânica brasileira.**
 
-A pesquisa investiga o uso de redes neurais profundas para classificação de espécies em imagens, com atenção à qualidade dos dados, ao processo experimental e à avaliação dos modelos.
+A pesquisa investiga o uso de redes neurais profundas para classificação, segmentação e rastreamento de espécies em imagens e vídeos, com atenção à qualidade dos dados, ao processo experimental e à avaliação dos modelos.
 
 **Frentes atuais**
 
 - Curadoria, organização e análise de datasets de imagens
 - Classificação com redes neurais convolucionais
+- Segmentação de imagens para identificação e delimitação dos peixes
+- Rastreamento de objetos em sequências de vídeo
 - Transfer Learning e Fine-Tuning
 - Comparação entre arquiteturas como ConvNeXt e ResNet
 - Data augmentation e estratégias de regularização
@@ -44,7 +46,7 @@ A pesquisa investiga o uso de redes neurais profundas para classificação de es
 
 <p align="center">
   <img src="https://img.shields.io/badge/Research-Computer_Vision-5C6BC0?style=for-the-badge" alt="Research: Computer Vision" />
-  <img src="https://img.shields.io/badge/Deep_Learning-Image_Classification-FF6F00?style=for-the-badge" alt="Deep Learning: Image Classification" />
+  <img src="https://img.shields.io/badge/Tasks-Classification_%7C_Segmentation_%7C_Tracking-FF6F00?style=for-the-badge" alt="Tasks: Classification, Segmentation and Tracking" />
   <img src="https://img.shields.io/badge/Models-ConvNeXt_%7C_ResNet-7952B3?style=for-the-badge" alt="Models: ConvNeXt and ResNet" />
 </p>
 
@@ -54,7 +56,7 @@ A pesquisa investiga o uso de redes neurais profundas para classificação de es
 |---|---|
 | Java e Spring Boot | Python, TensorFlow e Keras |
 | APIs REST e processamento assíncrono | Visão Computacional |
-| PostgreSQL, transações, MVCC e locks | CNNs e classificação de imagens |
+| PostgreSQL, transações, MVCC e locks | Classificação, segmentação e rastreamento |
 | RabbitMQ, Redis e WebSocket | Transfer Learning e Fine-Tuning |
 | Multi-tenancy e sistemas distribuídos | Preparação e avaliação de datasets |
 | Docker, Kubernetes e observabilidade | OpenCV e experimentação científica |
@@ -63,7 +65,7 @@ A pesquisa investiga o uso de redes neurais profundas para classificação de es
 
 ### [Machine Learning — Mestrado](https://github.com/viniciusscience/Machine-Learning-Mestrado)
 
-Experimentos acadêmicos em Machine Learning e Deep Learning, com foco em classificação de imagens e identificação de espécies de peixes usando CNNs, ConvNeXt e ResNet.
+Experimentos acadêmicos em Machine Learning e Deep Learning aplicados à identificação de espécies de peixes, abrangendo classificação, segmentação e rastreamento em imagens e vídeos.
 
 ### [Modern Concurrency in Java](https://github.com/viniciusscience/modern-concurrency-java-book)
 
