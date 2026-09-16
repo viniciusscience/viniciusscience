@@ -3,8 +3,6 @@
   <img src="./assets/profile-banner.svg" alt="Jose Vinicius — Software Engineering, Java, Spring Boot, Computer Vision e Deep Learning" width="100%" />
 </div>
 
-<h2 align="center">👋 Olá! Eu sou o Vinicius</h2>
-
 <p align="center">
   <strong>Software Engineer</strong> com foco em backend, arquitetura e sistemas distribuídos.<br/>
   Mestrando em <strong>Computação Aplicada</strong>, com pesquisa em <strong>Visão Computacional e Deep Learning</strong>.
