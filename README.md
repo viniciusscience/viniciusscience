@@ -4,7 +4,7 @@
 
 **Engenheiro de Software · Mestrando em Computação Aplicada (UNIVALI · LEMA)**
 
-`Java & Spring Boot` · `Sistemas Distribuídos` · `Visão Computacional` · `Deep Learning`
+`Java & Spring Boot` · `Go (Golang)` · `Sistemas Distribuídos` · `Visão Computacional` · `Deep Learning`
 
 <p>
   <a href="https://www.linkedin.com/in/viniciecomp/" target="_blank">
@@ -21,6 +21,7 @@
 <p>
   <img src="https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white" alt="Java" />
   <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white" alt="Spring Boot" />
+  <img src="https://img.shields.io/badge/Go-00ADD8?style=flat-square&logo=go&logoColor=white" alt="Go" />
   <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL" />
   <img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white" alt="Redis" />
   <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" />
@@ -37,7 +38,7 @@
 
 ## Sobre
 
-Engenheiro de Software focado em **backend, arquitetura e sistemas distribuídos** (Java, Spring Boot, PostgreSQL e Docker/Kubernetes) e mestrando em **Computação Aplicada na UNIVALI** (*LEMA — Laboratório de Estudos Marinhos Aplicados*), pesquisando **Visão Computacional e Deep Learning**.
+Engenheiro de Software focado em **backend, arquitetura e sistemas distribuídos** (Java, Spring Boot, Go, PostgreSQL e Docker/Kubernetes) e mestrando em **Computação Aplicada na UNIVALI** (*LEMA — Laboratório de Estudos Marinhos Aplicados*), pesquisando **Visão Computacional e Deep Learning**.
 
 Atuo na interseção entre **engenharia de software de produção** e **pesquisa aplicada em IA** — levando rigor de arquitetura, reprodutibilidade, observabilidade e confiabilidade do backend para pipelines completos de visão computacional no mundo real.
 
@@ -76,6 +77,7 @@ Atuo na interseção entre **engenharia de software de produção** e **pesquisa
 | [**SaaS Multi-tenancy**](https://github.com/viniciusscience/multitenancy) | Arquitetura SaaS multi-tenant em Java/Spring com isolamento por estratégia de *schemas*. | `Java` `Spring Boot` `PostgreSQL` `SaaS` |
 | [**Spring + Redis + PostgreSQL**](https://github.com/viniciusscience/spring-redis-postgres) | Padrões de cache distribuído com Redis integrado à persistência relacional em PostgreSQL. | `Java` `Spring Boot` `Redis` `PostgreSQL` |
 | [**Docker Client API**](https://github.com/viniciusscience/docker-client) | Integração programática em Java com a Docker Engine API para controle e automação de containers. | `Java` `Docker API` `Backend` |
+| [**Game 2D Multiplayer (Go)**](https://github.com/viniciusscience/game-2d-go) | Jogo 2D multiplayer em tempo real desenvolvido em Go, explorando concorrência, goroutines e comunicação em rede. | `Go` `Concurrency` `Multiplayer` |
 | [**MCP Easy Setup**](https://github.com/viniciusscience/mcp-easy-setup) | Extensão para VS Code voltada à criação guiada de integrações com o *Model Context Protocol* (MCP). | `TypeScript` `VS Code API` `MCP` |
 
 ---
@@ -84,7 +86,7 @@ Atuo na interseção entre **engenharia de software de produção** e **pesquisa
 
 | Engenharia de Software | Inteligência Artificial & Pesquisa |
 | :--- | :--- |
-| **Core:** Java, Spring Boot, APIs REST, FastAPI e concorrência | **Frameworks:** Python, PyTorch, TensorFlow, Keras e OpenCV |
+| **Core:** Java, Spring Boot, Go (Golang), APIs REST, FastAPI e concorrência | **Frameworks:** Python, PyTorch, TensorFlow, Keras e OpenCV |
 | **Dados:** PostgreSQL, Redis, transações, *locks* e *multi-tenancy* | **Visão Computacional:** Classificação, segmentação, rastreamento e biometria |
 | **Segurança & Arquitetura:** OAuth2, Spring Security 6+, sistemas distribuídos | **ML Engineering:** Validação de dados, monitoramento, reprodutibilidade e CI |
 | **Infra & Operação:** Docker, Kubernetes (K3s), GitHub Actions e Cloud | **Pesquisa Aplicada:** Monitoramento Eletrônico Pesqueiro · UNIVALI / LEMA |
@@ -93,6 +95,6 @@ Atuo na interseção entre **engenharia de software de produção** e **pesquisa
 
 <div align="center">
 
-Aberto a oportunidades e colaborações em **Engenharia de Software (Java/Backend)**, **ML Engineering** e **Visão Computacional Aplicada**.
+Aberto a oportunidades e colaborações em **Engenharia de Software (Java / Go / Backend)**, **ML Engineering** e **Visão Computacional Aplicada**.
 
 </div>
