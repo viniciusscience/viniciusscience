@@ -47,11 +47,9 @@ Atuo na interseção entre **engenharia de software de produção** e **pesquisa
 
 > **Plataforma aberta de Visão Computacional e Monitoramento Eletrônico (EM) para identificação, contagem e biometria de grandes peixes migratórios marinhos** · *UNIVALI · LEMA · ONU ODS 14*
 
-<p align="center">
-  <a href="https://github.com/viniciusscience/fishid-studio">
-    <img src="https://raw.githubusercontent.com/viniciusscience/fishid-studio/main/docs/fishid_em_demo.gif" alt="FishID Studio — Monitoramento Eletrônico em Vídeo (UNIVALI · LEMA)" width="88%" />
-  </a>
-</p>
+| 🐟 Classificação de Espécies (10 Pelágicos) | 🎬 Monitoramento Eletrônico & Biometria (EM) |
+| :---: | :---: |
+| <a href="https://github.com/viniciusscience/fishid-studio"><img src="https://raw.githubusercontent.com/viniciusscience/fishid-studio/main/docs/fishid_classificacao_demo.gif" alt="FishID Studio — Classificação de Espécies (UNIVALI · LEMA)" width="100%" /></a> | <a href="https://github.com/viniciusscience/fishid-studio"><img src="https://raw.githubusercontent.com/viniciusscience/fishid-studio/main/docs/fishid_em_demo.gif" alt="FishID Studio — Monitoramento Eletrônico em Vídeo (UNIVALI · LEMA)" width="100%" /></a> |
 
 <p align="center">
   <a href="https://github.com/viniciusscience/fishid-studio/actions/workflows/ci.yml">
