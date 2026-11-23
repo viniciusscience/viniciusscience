@@ -1,20 +1,20 @@
 <div align="center">
 
-# José Vinicius da Silva de Souza
+# José Vinícius da Silva de Souza
 
-**Software Engineer · M.Sc. Student in Applied Computing**
+**Engenheiro de Software · Mestrando em Computação Aplicada (UNIVALI · LEMA)**
 
-`Backend Engineering` · `Distributed Systems` · `Computer Vision` · `Deep Learning`
+`Java & Spring Boot` · `Sistemas Distribuídos` · `Visão Computacional` · `Deep Learning`
 
 <p>
   <a href="https://www.linkedin.com/in/viniciecomp/" target="_blank">
-    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn" />
+    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
   </a>
-  <a href="mailto:SEU-EMAIL@DOMINIO.COM">
-    <img src="https://img.shields.io/badge/Email-1E293B?style=flat-square&logo=gmail&logoColor=white" alt="Email" />
+  <a href="https://github.com/viniciusscience/fishid-studio" target="_blank">
+    <img src="https://img.shields.io/badge/FishID_Studio-0F766E?style=for-the-badge&logo=github&logoColor=white" alt="FishID Studio" />
   </a>
-  <a href="http://lattes.cnpq.br/SEU-ID-LATTES" target="_blank">
-    <img src="https://img.shields.io/badge/Curr%C3%ADculo_Lattes-0F766E?style=flat-square&logo=googlescholar&logoColor=white" alt="Lattes" />
+  <a href="https://doi.org/10.5281/zenodo.24451918" target="_blank">
+    <img src="https://zenodo.org/badge/1467922496.svg" alt="DOI Zenodo" />
   </a>
 </p>
 
@@ -22,10 +22,13 @@
   <img src="https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white" alt="Java" />
   <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white" alt="Spring Boot" />
   <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white" alt="Redis" />
   <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" />
+  <img src="https://img.shields.io/badge/Kubernetes-326CE5?style=flat-square&logo=kubernetes&logoColor=white" alt="Kubernetes" />
   <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white" alt="PyTorch" />
   <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white" alt="TensorFlow" />
-  <img src="https://img.shields.io/badge/Keras-D00000?style=flat-square&logo=keras&logoColor=white" alt="Keras" />
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI" />
 </p>
 
 </div>
@@ -34,29 +37,35 @@
 
 ## Sobre
 
-Engenheiro de software focado em **backend, arquitetura e sistemas distribuídos** (Java, Spring Boot e PostgreSQL) e mestrando em **Computação Aplicada**, pesquisando **Visão Computacional e Deep Learning**.
+Engenheiro de Software focado em **backend, arquitetura e sistemas distribuídos** (Java, Spring Boot, PostgreSQL e Docker/Kubernetes) e mestrando em **Computação Aplicada na UNIVALI** (*LEMA — Laboratório de Estudos Marinhos Aplicados*), pesquisando **Visão Computacional e Deep Learning**.
 
-Atuo na interseção entre engenharia de produção e pesquisa aplicada — levando o mesmo rigor de **concorrência, consistência, escalabilidade e observabilidade** do desenvolvimento backend para a construção de pipelines experimentais reproduzíveis em inteligência artificial.
+Atuo na interseção entre **engenharia de software de produção** e **pesquisa aplicada em IA** — levando rigor de arquitetura, reprodutibilidade, observabilidade e confiabilidade do backend para pipelines completos de visão computacional no mundo real.
 
 ---
 
-## Pesquisa de Mestrado
+## Projeto em Destaque — 🐟 [FishID Studio](https://github.com/viniciusscience/fishid-studio)
 
-> **Desenvolvimento de modelos de aprendizagem profunda para identificação de grandes peixes migratórios capturados pela pesca oceânica brasileira.**
-
-A pesquisa investiga arquiteturas de redes neurais profundas para **classificação, segmentação e rastreamento** de espécies em imagens e sequências de vídeo, com ênfase em qualidade de dados, reprodutibilidade experimental e avaliação rigorosa.
-
-| Pilar | Frentes de Trabalho |
-| :--- | :--- |
-| **Dados & Visão** | Curadoria e análise de datasets, pré-processamento, *data augmentation* e segmentação para delimitação das espécies |
-| **Modelagem & Treino** | CNNs com *Transfer Learning* e *Fine-Tuning*, regularização e benchmark entre arquiteturas (**ConvNeXt**, **ResNet**) |
-| **Avaliação & Vídeo** | Métricas (*accuracy*, *top-k accuracy*, matriz de confusão), rastreamento em vídeo e experimentação reproduzível em **TensorFlow/Keras** |
+> **Plataforma aberta de Visão Computacional e Monitoramento Eletrônico (EM) para identificação, contagem e biometria de grandes peixes migratórios marinhos** · *UNIVALI · LEMA · ONU ODS 14*
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Dom%C3%ADnio-Computer_Vision-0F766E?style=flat-square" alt="Computer Vision" />
-  <img src="https://img.shields.io/badge/Tarefas-Classification_%7C_Segmentation_%7C_Tracking-1E293B?style=flat-square" alt="Tarefas" />
-  <img src="https://img.shields.io/badge/Arquiteturas-ConvNeXt_%7C_ResNet-334155?style=flat-square" alt="Arquiteturas" />
+  <a href="https://github.com/viniciusscience/fishid-studio">
+    <img src="https://raw.githubusercontent.com/viniciusscience/fishid-studio/main/docs/fishid_em_demo.gif" alt="FishID Studio — Monitoramento Eletrônico em Vídeo (UNIVALI · LEMA)" width="88%" />
+  </a>
 </p>
+
+<p align="center">
+  <a href="https://github.com/viniciusscience/fishid-studio/actions/workflows/ci.yml">
+    <img src="https://github.com/viniciusscience/fishid-studio/actions/workflows/ci.yml/badge.svg" alt="CI Status" />
+  </a>
+  <a href="https://doi.org/10.5281/zenodo.24451918">
+    <img src="https://zenodo.org/badge/1467922496.svg" alt="DOI" />
+  </a>
+  <img src="https://img.shields.io/badge/ONU_ODS_14-Vida_na_%C3%81gua-0A97D9?style=flat-square" alt="ODS 14" />
+</p>
+
+- **Identificação de Espécies:** classificação de 10 grandes peixes migratórios (atuns, agulhões, espadarte e dourado-do-mar) com explicabilidade visual e aprendizado contínuo com validação de qualidade.
+- **Monitoramento Eletrônico (EM) em Vídeo:** contagem consolidada anti-oclusão, segmentação de corpo inteiro, medição de comprimento curvo com margem de erro (`±%`) e calibração interativa `px ↔ cm`.
+- **Software Citável (Zenodo DOI):** `10.5281/zenodo.24451918` · Pesquisa de Mestrado em parceria com o **Prof. Dr. Rodrigo Sant'Ana** (`@rodrigosantana`).
 
 ---
 
@@ -64,30 +73,28 @@ A pesquisa investiga arquiteturas de redes neurais profundas para **classificaç
 
 | Projeto | Descrição & Foco Técnico | Stack |
 | :--- | :--- | :--- |
-| [**Machine Learning — Mestrado**](https://github.com/viniciusscience/Machine-Learning-Mestrado) | Pipeline acadêmico de Deep Learning para identificação de grandes peixes migratórios (classificação, segmentação e rastreamento em imagem e vídeo). | `Python` `TensorFlow` `Keras` `OpenCV` |
-| [**Modern Concurrency in Java**](https://github.com/viniciusscience/modern-concurrency-java-book) | Estudos práticos e benchmarks sobre concorrência moderna na JVM: *virtual threads*, *executors*, semáforos, sincronização e diagnóstico de gargalos. | `Java` `JVM` `Concurrency` |
-| [**MCP Easy Setup**](https://github.com/viniciusscience/mcp-easy-setup) | Extensão para Visual Studio Code projetada para simplificar e padronizar a configuração de integrações com o *Model Context Protocol* (MCP). | `TypeScript` `VS Code API` `MCP` |
-
-<!--
-DICA: Assim que publicar o FishID Studio no GitHub / Cloud Run, descomente a linha abaixo na tabela acima:
-| [**FishID Studio**](https://github.com/viniciusscience/fishid-studio) | Aplicação web containerizada para inferência interativa de espécies marinhas em imagens e vídeos via modelo `.keras` em produção. | `Streamlit` `Docker` `Cloud Run` `Keras` |
--->
+| [**FishID Studio**](https://github.com/viniciusscience/fishid-studio) | Plataforma end-to-end de Visão Computacional e Monitoramento Eletrônico (EM) para identificação de espécies, contagem e biometria em vídeo (DOI Zenodo + CI). | `Python` `FastAPI` `Streamlit` `Docker` `Deep Learning` |
+| [**OAuth2 & Spring Security 6+**](https://github.com/viniciusscience/oauth02-spring-security) | Arquitetura de autenticação e autorização com Spring Security 6+: *Authorization Server* e *Resource Server* em Java. | `Java` `Spring Boot` `Spring Security` `OAuth2` |
+| [**SaaS Multi-tenancy**](https://github.com/viniciusscience/multitenancy) | Arquitetura SaaS multi-tenant em Java/Spring com isolamento por estratégia de *schemas*. | `Java` `Spring Boot` `PostgreSQL` `SaaS` |
+| [**Spring + Redis + PostgreSQL**](https://github.com/viniciusscience/spring-redis-postgres) | Padrões de cache distribuído com Redis integrado à persistência relacional em PostgreSQL. | `Java` `Spring Boot` `Redis` `PostgreSQL` |
+| [**Docker Client API**](https://github.com/viniciusscience/docker-client) | Integração programática em Java com a Docker Engine API para controle e automação de containers. | `Java` `Docker API` `Backend` |
+| [**MCP Easy Setup**](https://github.com/viniciusscience/mcp-easy-setup) | Extensão para VS Code voltada à criação guiada de integrações com o *Model Context Protocol* (MCP). | `TypeScript` `VS Code API` `MCP` |
 
 ---
 
 ## Áreas de Atuação & Stack
 
-| Engenharia de Software | Inteligência Artificial |
+| Engenharia de Software | Inteligência Artificial & Pesquisa |
 | :--- | :--- |
-| **Core:** Java, Spring Boot, APIs REST e processamento assíncrono | **Frameworks:** Python, TensorFlow, Keras e OpenCV |
-| **Dados:** PostgreSQL, transações, MVCC, *locks* e otimização de consultas | **Visão Computacional:** Classificação, segmentação e rastreamento |
-| **Sistemas Distribuídos:** RabbitMQ, Redis, WebSocket e *multi-tenancy* | **Modelagem:** *Transfer Learning*, *Fine-Tuning* e comparação de CNNs |
-| **Infra & Operação:** Docker, Kubernetes, CI/CD e observabilidade | **Ciência Aplicada:** Curadoria de datasets e avaliação experimental |
+| **Core:** Java, Spring Boot, APIs REST, FastAPI e concorrência | **Frameworks:** Python, PyTorch, TensorFlow, Keras e OpenCV |
+| **Dados:** PostgreSQL, Redis, transações, *locks* e *multi-tenancy* | **Visão Computacional:** Classificação, segmentação, rastreamento e biometria |
+| **Segurança & Arquitetura:** OAuth2, Spring Security 6+, sistemas distribuídos | **ML Engineering:** Validação de dados, monitoramento, reprodutibilidade e CI |
+| **Infra & Operação:** Docker, Kubernetes (K3s), GitHub Actions e Cloud | **Pesquisa Aplicada:** Monitoramento Eletrônico Pesqueiro · UNIVALI / LEMA |
 
 ---
 
 <div align="center">
 
-Aberto a discussões sobre **arquitetura de sistemas distribuídos**, **engenharia backend** e **visão computacional aplicada**.
+Aberto a oportunidades e colaborações em **Engenharia de Software (Java/Backend)**, **ML Engineering** e **Visão Computacional Aplicada**.
 
 </div>
